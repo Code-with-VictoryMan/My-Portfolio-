@@ -1,0 +1,340 @@
+/* ==== GLOBAL STYLES ==== */
+body {
+    background-color: #000000;
+    color: #e5e5e5;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.4vw;
+    margin-left: 4%;
+    margin-bottom: 0.5em;
+}
+
+/* ==== HERO SECTION ==== */
+/* ==== HERO SLIDESHOW SECTION ==== */
+.hero {
+    position: relative;
+    height: 56.25vw;
+    background-image: linear-gradient(to top, #000000 10%, transparent 50%), url('images/hero-background.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.8s ease-in-out; /* Smooth fade transition */
+}
+
+/* The active slide is visible */
+.hero-slide.active {
+    opacity: 1;
+}
+
+.hero-content {
+    /* We remove the absolute positioning and center the content */
+    position: static;
+    padding-left: 4%;
+    width: 50%;
+}
+
+.hero-content h1 { font-size: 3vw; margin-bottom: 0.5em; }
+.hero-content p { font-size: 1.2vw; line-height: 1.4; }
+.hero-buttons a {
+    text-decoration: none;
+    color: white;
+    background-color: rgba(109, 109, 110, 0.7);
+    padding: 0.8vw 2.3vw;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+/* ==== PROJECT ROWS & CARDS ==== */
+.row {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.row-inner {
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    padding-left: 4%;
+    gap: 10px;
+    scrollbar-width: none; /* Firefox */
+}
+.row-inner::-webkit-scrollbar { display: none; /* Safari & Chrome */ }
+
+.project-card {
+    flex-shrink: 0;
+    width: 24%;
+    border-radius: 4px;
+    transition: transform 300ms ease, box-shadow 300ms ease;
+    cursor: pointer;
+}
+.project-card img { width: 100%; display: block; border-radius: 4px; }
+.project-card:hover {
+    transform: scale(1.1);
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* ==== CAROUSEL ARROWS ==== */
+.scroll-btn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 4%;
+    background-color: rgba(20, 20, 20, 0.5);
+    color: white;
+    border: none;
+    font-size: 3vw;
+    cursor: pointer;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+.row:hover .scroll-btn { opacity: 1; }
+.scroll-btn.left { left: 0; }
+.scroll-btn.right { right: 0; }
+.scroll-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+/* ==== MODAL ==== */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.modal.active { display: flex; }
+.modal-content {
+    background-color: #000000;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #181818;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+}
+.modal-backdrop {
+    height: 450px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-image: linear-gradient(to top, #000000, transparent 50%);
+}
+.modal-body { padding: 20px 40px; }
+.modal-buttons { margin-top: 20px; }
+.modal-buttons a {
+    text-decoration: none;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-weight: bold;
+    background-color: white;
+}
+.modal-buttons a.btn-repo {
+    background-color: #333;
+    color: white;
+}
+.tech-stack { margin-top: 20px; color: #777; }
+.tech-stack span { color: #fff; }
+
+/* ==== RESPONSIVE DESIGN (FOR TABLETS & MOBILE) ==== */
+/* This @media rule applies the styles inside only when the screen width is 768px or less. */
+
+@media (max-width: 768px) {
+
+    /* --- Adjust Hero Section for smaller screens --- */
+    .hero-content h1 {
+        font-size: 6vw; /* Make font size relative to screen width */
+    }
+
+    .hero-content p {
+        font-size: 2.5vw; /* Make font size smaller */
+        width: 80%;       /* Allow text to use more width */
+    }
+
+    .hero-buttons a {
+        padding: 1.5vw 4vw; /* Adjust button padding */
+        font-size: 2.5vw;
+    }
+
+    /* --- Adjust Project Rows & Cards --- */
+    h2 {
+        font-size: 3vw; /* Slightly larger heading for mobile */
+    }
+    
+    .project-card {
+        /* Make cards wider so fewer are shown at once, which is better for touch scrolling. */
+        width: 45%; 
+        height: 50vw; /* Maintain aspect ratio */
+    }
+
+    /* --- Hide Carousel Arrows on touch devices --- */
+    /* Users will swipe to scroll, so the arrows are not needed. */
+    .scroll-btn {
+        display: none;
+    }
+
+    /* --- Adjust the Modal for vertical screens --- */
+    .modal-content {
+        width: 95%; /* Use more of the screen width */
+        max-height: 90vh; /* Prevent modal from being too tall */
+        overflow-y: auto; /* Allow modal content to scroll if needed */
+    }
+
+    .modal-backdrop {
+        height: 250px; /* Reduce the height of the banner image */
+    }
+
+    .modal-body {
+        padding: 20px; /* Reduce padding on smaller screens */
+    }
+}
+
+/* ==== SOCIAL MEDIA CARDS ==== */
+.social-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    text-decoration: none;
+    color: white;
+}
+
+.social-card .social-icon {
+    max-width: 55%; /* Control the size of the logo responsively */
+    max-height: 70%;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.social-card:hover .social-icon {
+    opacity: 1;
+    transform: scale(1.1); /* Make logo slightly bigger on hover */
+}
+
+.social-card .social-icon {
+    /* This div will act as a simple container */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+/* --- Style the SVG element directly for best results --- */
+.social-card .social-icon svg {
+    width: 45%; /* Control the logo size here */
+    height: auto;
+    opacity: 0.8;
+}
+
+
+.social-card:hover .social-icon {
+    transform: scale(1.1); /* Make the container (and logo) bigger on hover */
+    opacity: 1; /* You can apply opacity to the container or SVG directly */
+}
+/* --- Set the unique background for each card --- */
+#github-card {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 10%, transparent), url('images/bg-github.jpg');
+}
+#linkedin-card {
+    height: auto;
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 10%, transparent), url('images/bg-linkedin.jpg');
+}
+#instagram-card {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 10%, transparent), url('images/bg-instagram.jpg');
+}
+#leetcode-card {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 10%, transparent), url('images/bg-leetcode.jpg');
+}
+/* ==== NAVIGATION BAR ==== */
+.navbar-links {
+    list-style: none; /* Removes the default bullet points */
+    display: flex;      /* This is the key: aligns items horizontally */
+    gap: 25px;          /* Creates space between each link */
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none; /* Removes the underline from links */
+    font-size: 1rem;
+    font-weight: normal;
+    transition: color 0.3s ease;
+}
+
+/* This new rule aligns the links and the account avatar together */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 900px; /* Adjust the space between the last link and the avatar */
+}
+
+.navbar-links a:hover {
+    color: #b3b3b3; /* Lighter grey on hover */
+}
+
+/* Style for the new Portfolio logo image */
+.portfolio-logo {
+    height: 35px; /* Adjust height to match Netflix's logo size */
+    width: auto; /* Maintain aspect ratio */
+}
+
+.account-pic {
+    width: 35px;
+    height: 35px;
+    border-radius: 4px; /* Keeps the slightly rounded corners */
+}
+
+.about-image img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover; 
+    border-radius: 50%;
+    border: 3px solid #333;
+}
