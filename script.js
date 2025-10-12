@@ -1,5 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // ==== FETCH AND DISPLAY PROJECTS DYNAMICALLY ====
+const projectsRow = document.querySelector('#projects .row-inner');
+
+fetch('http://localhost:3000/api/projects')
+    .then(response => response.json())
+    .then(projects => {
+        projects.forEach(project => {
+            // Create a new project card element
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            
+            // Set the data attributes for the modal
+            card.dataset.title = project.title;
+            card.dataset.image = project.imageLarge;
+            card.dataset.description = project.description;
+            card.dataset.tech = project.tech;
+            card.dataset.liveUrl = project.liveUrl;
+            card.dataset.repoUrl = project.repoUrl;
+            
+            // Add the thumbnail image inside the card
+            card.innerHTML = `<img src="${project.imageThumb}" alt="${project.title} Thumbnail">`;
+            
+            // Add the new card to the row
+            projectsRow.appendChild(card);
+        });
+        // You might need to re-initialize the modal logic if it doesn't find the new cards.
+    })
+    .catch(error => {
+        console.error('Error fetching projects:', error);
+        projectsRow.innerHTML = '<p>Could not load projects.</p>';
+    });
+
     // ==== NAVBAR SCROLL EFFECT ====
     const navbar = document.querySelector('.navbar');
     if (navbar) {
