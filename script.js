@@ -168,4 +168,18 @@ fetch('http://localhost:3000/api/projects')
             if (event.target === modal) closeModal();
         });
     }
+
+ // Add event listener for the logout button
+if (logoutButton) {
+    logoutButton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // These two lines clear the saved credentials
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('username');
+
+        // This line redirects to the login page
+        window.location.href = 'login.html';
+    });
+}
 });

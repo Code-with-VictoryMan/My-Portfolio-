@@ -338,3 +338,23 @@ h2 {
     border-radius: 50%;
     border: 3px solid #333;
 }
+
+/* Dropdown Menu */
+.dropdown-menu a {
+    display: block;
+    color: #b3b3b3;
+    text-decoration: none;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+.dropdown-menu a:hover {
+    color: white;
+}
+
+/* Username below account icon */
+#nav-username {
+    color: #e5e5e5;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: none; /* Hidden by default */
+}
