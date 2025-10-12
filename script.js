@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
     // ==== FETCH AND DISPLAY PROJECTS DYNAMICALLY ====
 const projectsRow = document.querySelector('#projects .row-inner');
@@ -182,4 +182,62 @@ if (logoutButton) {
         window.location.href = 'login.html';
     });
 }
+
+d // ==== AUTH0 CONFIGURATION ====
+    const auth0 = await auth0.createAuth0Client({
+        domain: 'YOUR_AUTH0_DOMAIN',
+        clientId: 'YOUR_AUTH0_CLIENT_ID',
+        authorizationParams: {
+            redirect_uri: window.location.origin
+        }
+    });
+
+    // --- Key elements ---
+    const accountIcon = document.querySelector('.navbar-account');
+    const logoutButton = document.getElementById('logout-button');
+    const navUsername = document.getElementById('nav-username');
+    const dropdownUsername = document.getElementById('dropdown-username');
+
+    // --- This part handles the redirect back from Auth0 after login ---
+    if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
+        await auth0.handleRedirectCallback();
+        window.history.replaceState({}, document.title, "/");
+    }
+
+    // --- This part checks if the user is logged in and updates the UI ---
+    const isAuthenticated = await auth0.isAuthenticated();
+
+    if (isAuthenticated) {
+        // SCENARIO 1: USER IS LOGGED IN
+        const user = await auth0.getUser();
+        const username = user.name || user.email;
+
+        // Display the username
+        if (navUsername) navUsername.textContent = username;
+        if (navUsername) navUsername.style.display = 'block';
+        if (dropdownUsername) dropdownUsername.textContent = username;
+
+        // Make the logout button work
+        if (logoutButton) {
+            logoutButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                auth0.logout({ logoutParams: { returnTo: window.location.origin } });
+            });
+        }
+    } else {
+        // SCENARIO 2: USER IS LOGGED OUT
+        const dropdown = accountIcon.querySelector('.dropdown-menu');
+        if (dropdown) dropdown.style.display = 'none'; // Hide dropdown
+        if (navUsername) navUsername.style.display = 'none'; // Hide username
+
+        // When the account icon is clicked, redirect to the Auth0 login page
+        if (accountIcon) {
+            accountIcon.addEventListener('click', (e) => {
+                e.preventDefault();
+                auth0.loginWithRedirect();
+            });
+        }
+    }
+
+    // ... (Your other JavaScript for slideshows, modals, etc. goes here) ..
 });
