@@ -32,6 +32,25 @@
 </div>
         </div>
     </nav>
+    
+ <div id="login-modal" class="modal">
+    <div class="modal-content login-container">
+        <button class="modal-close">&times;</button>
+        <h1>Sign In</h1>
+        <form id="login-form">
+            <div class="form-group">
+                <input type="text" id="username" required>
+                <label for="username">Username</label>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" required>
+                <label for="password">Password</label>
+            </div>
+            <button type="submit" class="btn-submit">Sign In</button>
+            <p id="error-message"></p>
+        </form>
+    </div>
+ </div>
 
    <header class="hero">
         <div class="slideshow-container">

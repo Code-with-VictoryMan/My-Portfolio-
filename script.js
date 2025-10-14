@@ -240,4 +240,101 @@ d // ==== AUTH0 CONFIGURATION ====
     }
 
     // ... (Your other JavaScript for slideshows, modals, etc. goes here) ..
+
+
+    // ==== LOGIN & LOGOUT LOGIC ====
+const accountIcon = document.querySelector('.navbar-account');
+const logoutButton = document.getElementById('logout-button');
+const navUsername = document.getElementById('nav-username');
+const dropdownUsername = document.getElementById('dropdown-username');
+
+// --- Login Modal Elements ---
+const loginModal = document.getElementById('login-modal');
+const loginForm = document.getElementById('login-form');
+const loginModalCloseBtn = loginModal.querySelector('.modal-close');
+const errorMessage = document.getElementById('error-message');
+
+// --- Function to update the UI based on login state ---
+function updateUserUI() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const username = localStorage.getItem('username');
+
+    if (isLoggedIn === 'true' && username) {
+        // If logged in, display the username
+        navUsername.textContent = username;
+        navUsername.style.display = 'block';
+        if (dropdownUsername) dropdownUsername.textContent = username;
+        
+        // Ensure the dropdown menu is visible on hover for logged-in users
+        const dropdown = accountIcon.querySelector('.dropdown-menu');
+        if (dropdown) dropdown.style.display = '';
+    } else {
+        // If not logged in, hide dropdown and username placeholders
+        const dropdown = accountIcon.querySelector('.dropdown-menu');
+        if (dropdown) dropdown.style.display = 'none';
+        if (navUsername) navUsername.style.display = 'none';
+    }
+}
+
+// --- Initial check when page loads ---
+updateUserUI();
+
+// --- Event Listeners ---
+
+// Handle click on the main account icon
+accountIcon.addEventListener('click', (e) => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn !== 'true') {
+        // If not logged in, show the login modal
+        e.stopPropagation(); // Prevents dropdown from trying to open
+        loginModal.classList.add('active');
+    }
+    // If logged in, the default CSS hover behavior for the dropdown will work
+});
+
+// Handle login form submission
+if (loginForm) {
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const usernameInput = document.getElementById('username').value;
+        const passwordInput = document.getElementById('password').value;
+
+        try {
+            const response = await fetch('http://localhost:3000/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: usernameInput, password: passwordInput })
+            });
+            const data = await response.json();
+            if (data.success) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('username', usernameInput);
+                loginModal.classList.remove('active'); // Close the modal
+                updateUserUI(); // Update the navbar to show the username
+            } else {
+                errorMessage.textContent = data.message;
+            }
+        } catch (error) {
+            errorMessage.textContent = 'An error occurred. Please try again.';
+        }
+    });
+}
+
+// Handle closing the login modal
+if (loginModal) {
+    loginModalCloseBtn.addEventListener('click', () => loginModal.classList.remove('active'));
+    loginModal.addEventListener('click', (e) => {
+        if (e.target === loginModal) loginModal.classList.remove('active');
+    });
+}
+
+// Handle logout button
+if (logoutButton) {
+    logoutButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('username');
+        window.location.reload(); // Reload the page to reset to logged-out state
+    });
+}
 });

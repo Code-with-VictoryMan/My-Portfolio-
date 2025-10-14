@@ -358,3 +358,31 @@ h2 {
     margin-top: 5px;
     display: none; /* Hidden by default */
 }
+
+/* ==== LOGIN MODAL STYLES ==== */
+.login-container {
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 60px 68px 40px;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 320px;
+    text-align: left;
+}
+
+.login-container h1 {
+    font-size: 2rem;
+    margin-bottom: 28px;
+}
+
+#error-message {
+    color: #e87c03; /* Netflix warning orange */
+    margin-top: 10px;
+}
+
+/* Username below account icon in navbar */
+#nav-username {
+    color: #e5e5e5;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: none; /* Hidden by default */
+}
