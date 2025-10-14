@@ -243,7 +243,10 @@ d // ==== AUTH0 CONFIGURATION ====
 
 
 // ==== LOGIN & LOGOUT LOGIC ====
-// (Variables already declared above, do not redeclare here)
+const accountIcon = document.querySelector('.navbar-account');
+const logoutButton = document.getElementById('logout-button');
+const navUsername = document.getElementById('nav-username');
+const dropdownUsername = document.getElementById('dropdown-username');
 
 // --- Login Modal Elements ---
 const loginModal = document.getElementById('login-modal');
@@ -279,15 +282,17 @@ updateUserUI();
 // --- Event Listeners ---
 
 // Handle click on the main account icon
-accountIcon.addEventListener('click', (e) => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    if (isLoggedIn !== 'true') {
-        // If not logged in, show the login modal
-        e.stopPropagation(); // Prevents dropdown from trying to open
-        loginModal.classList.add('active');
-    }
-    // If logged in, the default CSS hover behavior for the dropdown will work
-});
+if (accountIcon) {
+    accountIcon.addEventListener('click', (e) => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn !== 'true') {
+            // If not logged in, show the login modal
+            e.stopPropagation(); // Prevents dropdown from trying to open
+            loginModal.classList.add('active');
+        }
+        // If logged in, the default CSS hover behavior for the dropdown will work
+    });
+}
 
 // Handle login form submission
 if (loginForm) {
