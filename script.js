@@ -242,11 +242,8 @@ d // ==== AUTH0 CONFIGURATION ====
     // ... (Your other JavaScript for slideshows, modals, etc. goes here) ..
 
 
-    // ==== LOGIN & LOGOUT LOGIC ====
-const accountIcon = document.querySelector('.navbar-account');
-const logoutButton = document.getElementById('logout-button');
-const navUsername = document.getElementById('nav-username');
-const dropdownUsername = document.getElementById('dropdown-username');
+// ==== LOGIN & LOGOUT LOGIC ====
+// (Variables already declared above, do not redeclare here)
 
 // --- Login Modal Elements ---
 const loginModal = document.getElementById('login-modal');
