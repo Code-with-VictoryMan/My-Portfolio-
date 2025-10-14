@@ -119,7 +119,7 @@ h2 {
 
 /* ==== MODAL ==== */
 .modal {
-    position: fixed;
+    position: right;
     z-index: 1000;
     left: 0;
     top: 0;

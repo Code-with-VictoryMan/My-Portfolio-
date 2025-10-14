@@ -243,10 +243,7 @@ d // ==== AUTH0 CONFIGURATION ====
 
 
 // ==== LOGIN & LOGOUT LOGIC ====
-const accountIcon = document.querySelector('.navbar-account');
-const logoutButton = document.getElementById('logout-button');
-const navUsername = document.getElementById('nav-username');
-const dropdownUsername = document.getElementById('dropdown-username');
+// Reuse previously declared accountIcon, logoutButton, navUsername, and dropdownUsername
 
 // --- Login Modal Elements ---
 const loginModal = document.getElementById('login-modal');
